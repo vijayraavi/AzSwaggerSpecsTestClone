@@ -1,0 +1,51 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="Directory.Build.props" />
+    <Import Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" />
+
+<!--
+  <PropertyGroup>
+    <DotNetRuntimeContext>$(MSBuildRuntimeType)</DotNetRuntimeContext>
+    <FxVersionTasksToUse Condition=" '$(DotNetRuntimeContext)' == 'Core' ">netstandard2.0</FxVersionTasksToUse>
+    <FxVersionTasksToUse Condition=" '$(FxVersionTasksToUse)' == '' AND '$(DotNetRuntimeContext)' == 'Full' ">net461</FxVersionTasksToUse>
+  </PropertyGroup>  <Target Name="Fn">
+    <Message Text="FxVersionTasksToUse is ......... $(FxVersionTasksToUse)" />
+  </Target>
+-->
+    <Target Name="GRS">
+        <Message Text="Executing GetPREventType"/>
+        <GetPREventType
+            GitHubPRNumber ="$(ghprbPullId)" 
+            GitHubCommitId ="$(ghprbActualCommit)"
+            GithubRepositoryUrl="$(ghprbAuthorRepoGitUrl)"
+            TriggerComment="$(ghprbCommentBody)"
+            JobName="$(JOB_NAME)"
+        >
+        <Output TaskParameter="PREventType" PropertyName="PREventType" />
+        </GetPREventType>
+                    <Message Text="event type is $(PREventType)" Importance="High" />
+
+        <!-->
+        <Message Text="Executing GetRestSpecPRMetaData" />
+        
+        <GetRestApiSpecPRMetadataTask
+            GitHubPRNumber="$(GitHubPRNumber)"
+            GitHubFork="$(GitHubFork)"
+            GitHubRepo = "$(GitHubRepo)"
+            GitHubRepoUrl ="$(GitHubRepoUrl)"
+        >
+            <Output TaskParameter="RestApiMetaDataSerializedFilePath" PropertyName="RestApiMDFilePath" />
+        </GetRestApiSpecPRMetadataTask>
+
+        <Message Text="$(RestApiMDFilePath)" />
+        <!-->
+    </Target>
+
+    <Target Name="KV">
+        <GetKVSecrets>
+            <Output TaskParameter="Email" PropertyName="EmailAddress" />
+        </GetKVSecrets>
+
+        <Message Text="Email is $(EmailAddress)" />
+    </Target>
+
+</Project>
