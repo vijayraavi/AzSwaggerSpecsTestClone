@@ -13,7 +13,7 @@
 -->
     <Target Name="GRS">
         <PropertyGroup>
-            <GitHubRepoInfo>$(GithubRepoName.Split('/'))</GitHubRepoInfo>
+            <GitHubRepoInfo>$(ghprbGhRepository.Split('/'))</GitHubRepoInfo>
         </PropertyGroup>
         <Message Text="Executing GetPREventType"/>
         <GetPREventType
