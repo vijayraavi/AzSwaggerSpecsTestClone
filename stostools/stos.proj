@@ -16,15 +16,18 @@
         <GetPREventType
             GitHubPRNumber = "$(ghprbPullId)" 
             GitHubCommitId = "$(ghprbActualCommit)"
-            GithubRepositoryUrl = "$(ghprbAuthorRepoGitUrl)"
+            GithubRepositoryUrl = "$(GIT_URL)"
             TriggerComment = "$(ghprbCommentBody)"
             JobName = "$(JOB_NAME)"
         >
             <Output TaskParameter="PREventType" PropertyName="PREventType" />
+            <Output TaskParameter="GitHubFork" PropertyName="GitHubFork" />
+            <Output TaskParameter="GitHubRepo" PropertyName="GitHubRepo" />
+
         </GetPREventType>
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
-        <Message Text="fork is $((ghprbGhRepository.Split('/'))[0])" />
-        <Message Text="repo name is $((ghprbGhRepository.Split('/'))[1])" />
+        <Message Text="fork is $(GitHubFork)" />
+        <Message Text="repo name is $(GitHubRepo)" />
 
         <!-->
         <GetRestApiSpecPRMetadataTask
@@ -33,7 +36,7 @@
             GitHubRepo = "$(GitHubRepoInfo[1])"
             GitHubRepoUrl = "$(ghprbAuthorRepoGitUrl)"
         >
-            <Output TaskParameter="RestApiMetaDataSerializedFilePath" PropertyName="RestApiMDFilePath" />
+            <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
         </GetRestApiSpecPRMetadataTask>
         <Message Text="$(RestApiMDFilePath)" />
         <-->
