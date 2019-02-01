@@ -38,9 +38,8 @@
         >
             <Output TaskParameter="RestApiMetaDataSerializedFilePath" PropertyName="RestApiMDFilePath" />
         </GetRestApiSpecPRMetadataTask>
-        <-->
         <Message Text="$(RestApiMDFilePath)" />
-        <!-->
+        <-->
     </Target>
 
     <Target Name="KV">
