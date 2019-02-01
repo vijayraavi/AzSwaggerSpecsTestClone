@@ -12,8 +12,8 @@
   </Target>
 -->
     <Target Name="GRS">
-        <Message Text="Executing GetBuildInfo"/>
-        <GetBuildInfo
+        <Message Text="Executing GetBuildMetadata"/>
+        <GetBuildMetadata
             GitHubPRNumber = "$(ghprbPullId)" 
             GitHubCommitId = "$(ghprbActualCommit)"
             GithubRepositoryUrl = "$(GIT_URL)"
@@ -24,7 +24,7 @@
             <Output TaskParameter="GitHubFork" PropertyName="GitHubFork" />
             <Output TaskParameter="GitHubRepo" PropertyName="GitHubRepo" />
 
-        </GetBuildInfo>
+        </GetBuildMetadata>
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
         <Message Text="fork is $(GitHubFork)" Importance="High" />
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
