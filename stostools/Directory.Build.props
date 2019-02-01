@@ -1,0 +1,93 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<CurrentDir>$(MSBuildThisFileDirectory)</CurrentDir>
+		<RepoRootRelPath>.\</RepoRootRelPath>		
+		<RepoRootAbspath>$([System.IO.Path]::GetFullPath($(CurrentDir)).Trim('\'))</RepoRootAbspath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RepoRoot>$(RepoRootAbspath)</RepoRoot>
+		<RepoSrcDir>$(RepoRoot)\src</RepoSrcDir>
+		<RepoToolsDir>$(RepoRoot)\tools</RepoToolsDir>
+		<RepoNugetFeedDir>$(RepoToolsDir)\LocalNugetFeed</RepoNugetFeedDir>
+		<RepoNugetDir>$(RepoToolsDir)\NugetExe</RepoNugetDir>
+    <NugPkgSrcDir>$(RepoSrcDir)\NugetToolsPackage</NugPkgSrcDir>
+		<RepoNugetRestoreDir>$(RepoRoot)\restoredPackages</RepoNugetRestoreDir>
+	</PropertyGroup>
+
+  <PropertyGroup Label="CI paths">
+    <RepoCISrcDir>$(RepoSrcDir)\CI</RepoCISrcDir>
+    <RepoCICommonSrcDir>$(RepoCISrcDir)\CI.Common</RepoCICommonSrcDir>
+    <RepoCIBuildTaskDir>$(RepoCISrcDir)\CI.BuildTasks</RepoCIBuildTaskDir>
+    <CINugPkgSrcDir>$(NugPkgSrcDir)\CI.Tools.Package</CINugPkgSrcDir>
+    <CIBuildOutputDir>$(CINugPkgSrcDir)\build\tasks</CIBuildOutputDir>
+    <CINugPkgPublish_NetStd20Dir>$(CIBuildOutputDir)\netstandard2.0</CINugPkgPublish_NetStd20Dir>
+  </PropertyGroup>
+
+  <PropertyGroup Label="SToS paths">
+    <RepoSToSSrcDir>$(RepoSrcDir)\SwaggerToSdk</RepoSToSSrcDir>
+    <RepoSToSCommonSrcDir>$(RepoSToSSrcDir)\Common\SToS.Common</RepoSToSCommonSrcDir>
+    <RepoSToSBuildTaskSrcDir>$(RepoSToSSrcDir)\BuildTasks\SToS.BuildTasks</RepoSToSBuildTaskSrcDir>
+    <SToSNugPkgSrcDir>$(NugPkgSrcDir)\SwaggerToSdk.Tools.Package</SToSNugPkgSrcDir>
+    <SToSBuildOutputDir>$(SToSNugPkgSrcDir)\build\tasks</SToSBuildOutputDir>
+    <SToSNugPkgPublish_NetStd20Dir>$(SToSBuildOutputDir)\netstandard2.0</SToSNugPkgPublish_NetStd20Dir>
+    <SToSNugPkgPublish_Net461Dir>$(SToSBuildOutputDir)\net461</SToSNugPkgPublish_Net461Dir>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+		<Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<TestDataProjects Include="$(RepoCISrcDir)\CI.BuildTasks\Tests\TestDataProject\*.csproj" />
+
+		<CITestProjects Include="$(RepoCISrcDir)\CI.BuildTasks\Tests\**\*.csproj" Exclude="@(TestDataProjects)" />
+		<SToSTestProjects Include="$(RepoSToSSrcDir)\BuildTasks\Tests\*.csproj;$(RepoSToSSrcDir)\Common\Tests\*.csproj" />
+		<SToSProjects Include="$(RepoSToSBuildTaskSrcDir)\*.csproj;$(RepoSToSCommonSrcDir)\*.csproj" />		
+		<SToSNugPkgProjects Include="$(SToSNugPkgSrcDir)\*.csproj" />
+		
+		<NugetPkgProjects Include="@(SToSNugPkgProjects)" />		
+		<ProjectsToBuild Include="@(SToSProjects);@(SToSTestProjects)" />
+		<ProjectsToPublish Include="@(SToSProjects)" />
+	</ItemGroup>
+	<!--
+	<Import Project="SdkMgmt.props" Condition=" Exists('$(RepoNugetFeedDir)\Ms.Az.NetSdkBuildTools.Package.0.9.0.nupkg') " Sdk="Ms.Az.NetSdkBuildTools.Package" Version="0.9.0" />	
+	-->
+
+	<Target Name="DirPropEnv">
+		<Message Text="CurrentDir=========$(CurrentDir)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="RepoRoot=========$(RepoRoot)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="RepoSrcDir=========$(RepoSrcDir)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="RepoTaskSrcDir=========$(RepoTaskSrcDir)" Condition="'$(DebugTraceEnv)' == 'true' " />
+
+		<Message Text=" " Condition="'$(DebugTraceEnv)' == 'true' "/>
+
+		<Message Text="TestDataProjects=========%(TestDataProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />		
+		<Message Text="BuildTaskTestProjects=========%(BuildTaskTestProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />		
+		<Message Text="SwaggerToSdkTestProjects=========%(SwaggerToSdkTestProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="BuildTasksProjects=========%(BuildTasksProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="CommonTestProjects=========%(CommonTestProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="CommonTaskProjects=========%(CommonTaskProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="SwaggerToSdkProjects=========%(SwaggerToSdkProjects.Identity)" Condition="'$(DebugTraceEnv)' == 'true' " />
+		<Message Text="ProjectsToBuild=========@(ProjectsToBuild)" Condition="'$(DebugTraceEnv)' == 'true' " />
+	</Target>
+</Project>
+
+<!--
+<BuildTaskTestProjects Include="$(RepoTaskSrcDir)\Tests\**\*.csproj"
+								Exclude="@(TestDataProjects)" />
+		<CommonTestProjects Include="$(RepoCommonSrcDir)\Tests\**\*.csproj" />
+		<SwaggerToSdkTestProjects Include="$(RepoSwaggerSdkSrcDir)\Tests\**\*.csproj" />
+		<GithubToolsTestProjects Include="$(RepoGithubToolsSrcDir)\*.Tests\**\*.csproj" />
+
+		<BuildTasksProjects Include="$(RepoTaskSrcDir)\**\*.csproj" 
+							Exclude="@(BuildTaskTestProjects);@(TestDataProjects)"/>
+
+		<CommonTaskProjects Include="$(RepoCommonSrcDir)\**\*.csproj" 
+							Exclude="@(CommonTestProjects)" />
+		<SwaggerToSdkProjects Include="$(RepoSwaggerSdkSrcDir)\**\*.csproj" 
+								Exclude="@(SwaggerToSdkTestProjects)" />
+		
+		<GithubToolsProjects Include="$(RepoGithubToolsSrcDir)\**\*.csproj"
+						Exclude="@(GithubToolsTestProjects)" />
+-->
