@@ -26,8 +26,8 @@
 
         </GetBuildMetadata>
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
-        <Message Text="fork is $(GitHubFork)" />
-        <Message Text="repo name is $(GitHubRepo)" />
+        <Message Text="fork is $(GitHubFork)" Importance="High" />
+        <Message Text="repo name is $(GitHubRepo)" Importance="High" />
 
         <!-->
         <GetRestApiSpecPRMetadataTask
