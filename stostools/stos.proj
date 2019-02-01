@@ -12,9 +12,9 @@
   </Target>
 -->
     <Target Name="GRS">
-        <PropertyGroup>
+        <ItemGroup>
             <GitHubRepoInfo>$(ghprbGhRepository.Split('/'))</GitHubRepoInfo>
-        </PropertyGroup>
+        </ItemGroup>
         <Message Text="Executing GetPREventType"/>
         <GetPREventType
             GitHubPRNumber = "$(ghprbPullId)" 
@@ -26,8 +26,8 @@
             <Output TaskParameter="PREventType" PropertyName="PREventType" />
         </GetPREventType>
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
-        <Message Text="fork is $(GithubRepoInfo[0])" />
-        <Message Text="repo name is $(GithubRepoInfo[1])" />
+        <Message Text="fork is $(GitHubRepoInfo[0])" />
+        <Message Text="repo name is $(GitHubRepoInfo[1])" />
 
         <!-->
         <GetRestApiSpecPRMetadataTask
