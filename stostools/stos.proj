@@ -29,7 +29,6 @@
         <Message Text="fork is $(GitHubFork)" Importance="High" />
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
 
-        <!-->
         <GetRestApiSpecPRMetadataTask
             GitHubPRNumber = "$(ghprbPullId)"
             GitHubRepoName = "$(GithubRepoInfo[0])"
@@ -38,8 +37,7 @@
         >
             <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
         </GetRestApiSpecPRMetadataTask>
-        <Message Text="$(RestApiMDFilePath)" />
-        <-->
+        <Message Text="Complex object result $(RestApiSpecPRMetadata)"  Importance = "High"/>
     </Target>
 
     <Target Name="KV">
