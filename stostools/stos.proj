@@ -31,9 +31,9 @@
 
         <GetRestApiSpecPRMetadataTask
             GitHubPRNumber = "$(ghprbPullId)"
-            GitHubRepoName = "$(GithubRepoInfo[0])"
-            GitHubRepo = "$(GitHubRepoInfo[1])"
-            GitHubRepoUrl = "$(ghprbAuthorRepoGitUrl)"
+            GitHubFork = "$(GitHubFork)"
+            GitHubRepo = "$(GitHubRepo)"
+            GitHubRepoUrl = "$(GIT_URL)"
         >
             <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
         </GetRestApiSpecPRMetadataTask>
