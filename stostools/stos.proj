@@ -29,11 +29,20 @@
         <Message Text="fork is $(GitHubFork)" Importance="High" />
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
 
+        <GetResourceProviderFromPR
+            GitHubFork ="$(GitHubFork)"
+            GitHubPRNumber ="$(ghprbPullId)"
+            GitHubRepo ="$(GitHubRepo)"
+            >
+            <Output TaskParameter="ResourceProvider" PropertyName="ResourceProvider" />
+        </GetResourceProviderFromPR>
+
         <GetRestApiSpecPRMetadataTask
             GitHubPRNumber = "$(ghprbPullId)"
             GitHubFork = "$(GitHubFork)"
             GitHubRepo = "$(GitHubRepo)"
             GitHubRepoUrl = "$(GIT_URL)"
+            ResourceProvider = "$(ResourceProvider)"
         >
             <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
         </GetRestApiSpecPRMetadataTask>
