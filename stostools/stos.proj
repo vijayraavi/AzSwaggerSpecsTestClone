@@ -28,7 +28,7 @@
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
         <Message Text="fork is $(GitHubFork)" Importance="High" />
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
-
+        <!-->
         <GetResourceProviderFromPR
             GitHubFork ="$(GitHubFork)"
             GitHubPRNumber ="$(ghprbPullId)"
@@ -36,13 +36,13 @@
             >
             <Output TaskParameter="ResourceProvider" PropertyName="ResourceProvider" />
         </GetResourceProviderFromPR>
-
+        <-->
         <GetRestApiSpecPRMetadataTask
             GitHubPRNumber = "$(ghprbPullId)"
             GitHubFork = "$(GitHubFork)"
             GitHubRepo = "$(GitHubRepo)"
             GitHubRepoUrl = "$(GIT_URL)"
-            ResourceProvider = "$(ResourceProvider)"
+            ResourceProvider = "costmanagement/resource-manager"
         >
             <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
         </GetRestApiSpecPRMetadataTask>
