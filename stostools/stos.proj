@@ -49,6 +49,7 @@
         <GetNetSdkPRMetadataTask
             RestApiSpecPRMetadataRowId="$(RestApiSpecMetadataRowId)"
             ResourceProvider="$(ResourceProvider)"
+            NetSdkLocalRepoRoot="C:\Users\JenkinsAdmin\AppData\Local\Temp"
         >
             <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId"/>
             </GetNetSdkPRMetadataTask>
