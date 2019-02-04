@@ -46,6 +46,13 @@
             <Output TaskParameter="RestApiSpecMetadataRowId" PropertyName="RestApiSpecMetadataRowId" />
         </GetRestApiSpecPRMetadataTask>
         <Message Text="Complex object result $(RestApiSpecMetadataRowId)"  Importance = "High"/>
+        <GetNetSdkPRMetadataTask
+            RestApiSpecPRMetadataRowId="$(RestApiSpecMetadataRowId)"
+            ResourceProvider="$(ResourceProvider)"
+        >
+            <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId"/>
+            </GetNetSdkPRMetadataTask>
+            <Message Text="Net sdk pr metadata is at row $(NetSdkPRMetadataRowId)" Importance="High"/>
     </Target>
 
     <Target Name="KV">
