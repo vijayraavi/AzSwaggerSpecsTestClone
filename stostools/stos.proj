@@ -28,7 +28,6 @@
         <Message Text="Event type determined as $(PREventType)" Importance="High" />
         <Message Text="fork is $(GitHubFork)" Importance="High" />
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
-        <!-->
         <GetResourceProviderFromPR
             GitHubFork ="$(GitHubFork)"
             GitHubPRNumber ="$(ghprbPullId)"
@@ -36,17 +35,17 @@
             >
             <Output TaskParameter="ResourceProvider" PropertyName="ResourceProvider" />
         </GetResourceProviderFromPR>
-        <-->
+        <Message Text="rp calculated as $(ResourceProvider)" Importance="High" />
         <GetRestApiSpecPRMetadataTask
             GitHubPRNumber = "$(ghprbPullId)"
             GitHubFork = "$(GitHubFork)"
             GitHubRepo = "$(GitHubRepo)"
             GitHubRepoUrl = "$(GIT_URL)"
-            ResourceProvider = "costmanagement/resource-manager"
+            ResourceProvider = "$(ResourceProvider)"
         >
-            <Output TaskParameter="RestApiSpecPRMetadata" PropertyName="RestApiSpecPRMetadata" />
+            <Output TaskParameter="RestApiSpecMetadataRowId" PropertyName="RestApiSpecMetadataRowId" />
         </GetRestApiSpecPRMetadataTask>
-        <Message Text="Complex object result $(RestApiSpecPRMetadata)"  Importance = "High"/>
+        <Message Text="Complex object result $(RestApiSpecMetadataRowId)"  Importance = "High"/>
     </Target>
 
     <Target Name="KV">
