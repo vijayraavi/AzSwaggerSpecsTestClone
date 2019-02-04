@@ -14,11 +14,11 @@
     <Target Name="GRS">
         <Message Text="Executing GetBuildMetadata"/>
         <GetBuildMetadata
-            GitHubPRNumber = "26" 
-            GitHubCommitId = "blah"
-            GithubRepositoryUrl = "https://github.com/Azure/AzSwaggerSpecsTestClone.git"
-            TriggerComment = ""
-            JobName = "Test-AzSwagSpecsTestGold"
+            GitHubPRNumber = "$(ghprbPullId)" 
+            GitHubCommitId = "$(ghprbActualCommit)"
+            GithubRepositoryUrl = "$(GIT_URL)"
+            TriggerComment = "$(ghprbCommentBody)"
+            JobName = "$(JOB_NAME)"
         >
             <Output TaskParameter="PREventType" PropertyName="PREventType" />
             <Output TaskParameter="GitHubFork" PropertyName="GitHubFork" />
@@ -30,17 +30,17 @@
         <Message Text="repo name is $(GitHubRepo)" Importance="High" />
         <GetResourceProviderFromPR
             GitHubFork ="$(GitHubFork)"
-            GitHubPRNumber ="26"
+            GitHubPRNumber ="$(ghprbPullId)"
             GitHubRepo ="$(GitHubRepo)"
             >
             <Output TaskParameter="ResourceProvider" PropertyName="ResourceProvider" />
         </GetResourceProviderFromPR>
         <Message Text="rp calculated as $(ResourceProvider)" Importance="High" />
         <GetRestApiSpecPRMetadataTask
-            GitHubPRNumber = "26"
+            GitHubPRNumber = "$(ghprbPullId)"
             GitHubFork = "$(GitHubFork)"
             GitHubRepo = "$(GitHubRepo)"
-            GitHubRepoUrl = "https://github.com/Azure/AzSwaggerSpecsTestClone.git"
+            GitHubRepoUrl = "$(GIT_URL)"
             ResourceProvider = "$(ResourceProvider)"
         >
             <Output TaskParameter="RestApiSpecMetadataRowId" PropertyName="RestApiSpecMetadataRowId" />
