@@ -1,7 +1,10 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="Directory.Build.props" />
     <Import Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" />
-
+    <Import Project="Directory.Build.props" />    
+    <Import Condition=" '$(DevMode)' != 'true' " Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" />
+    <Import Condition=" '$(DevMode)' == 'true' AND Exists('$(DevMode_SDK_SToSPropsFile)') " Project="$(DevMode_SDK_SToSPropsFile)" />
+    
 <!--
   <PropertyGroup>
     <DotNetRuntimeContext>$(MSBuildRuntimeType)</DotNetRuntimeContext>
@@ -10,7 +13,7 @@
   </PropertyGroup>  <Target Name="Fn">
     <Message Text="FxVersionTasksToUse is ......... $(FxVersionTasksToUse)" />
   </Target>
--->
+
     <Target Name="GRS">
         <Message Text="Executing GetBuildMetadata"/>
         <GetBuildMetadata
@@ -25,9 +28,11 @@
             <Output TaskParameter="GitHubRepo" PropertyName="GitHubRepo" />
 
         </GetBuildMetadata>
-        <Message Text="Event type determined as $(PREventType)" Importance="High" />
-        <Message Text="fork is $(GitHubFork)" Importance="High" />
-        <Message Text="repo name is $(GitHubRepo)" Importance="High" />
+        <Message Text="Event type: $(PREventType)" />
+        <Message Text="fork is $(GitHubFork)" />
+        <Message Text="repo name is $(GitHubRepo)" />
+        
+        <Message Text="Executing GetResourceProviderFromPR" />
         <GetResourceProviderFromPR
             GitHubFork ="$(GitHubFork)"
             GitHubPRNumber ="$(ghprbPullId)"
@@ -45,23 +50,38 @@
         >
             <Output TaskParameter="RestApiSpecMetadataRowId" PropertyName="RestApiSpecMetadataRowId" />
         </GetRestApiSpecPRMetadataTask>
-        <Message Text="Complex object result $(RestApiSpecMetadataRowId)"  Importance = "High"/>
+
+        <Message Text="Executing GetNetSdkPRMetadataTask" />
         <GetNetSdkPRMetadataTask
             RestApiSpecPRMetadataRowId="$(RestApiSpecMetadataRowId)"
             ResourceProvider="$(ResourceProvider)"
-            NetSdkLocalRepoRoot="C:\Users\JenkinsAdmin\AppData\Local\Temp"
+            NetSdkLocalRepoRoot="C:\"
         >
             <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId"/>
-            </GetNetSdkPRMetadataTask>
-            <Message Text="Net sdk pr metadata is at row $(NetSdkPRMetadataRowId)" Importance="High"/>
+        </GetNetSdkPRMetadataTask>
     </Target>
+<-->
 
+<Target Name="StartNetSdkCodeGeneration">
+<Message Text="Commencing code generation"  Importance = "High"/>
+ <StartNetSdkCodeGeneration
+        GitHubPRNumber = "$(ghprbPullId)" 
+            GitHubCommitId = "$(ghprbActualCommit)"
+            GithubRepositoryUrl = "$(GIT_URL)"
+            TriggerComment = "$(ghprbCommentBody)"
+            JobName = "$(JOB_NAME)"
+ >
+    <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
+ </StartNetSdkCodeGeneration>
+<Message Text="net sdk pr metadata row id is $(NetSdkPRMetadataRowId)" Importance="High" />
+
+</Target>
     <Target Name="KV">
+        <DebugTask />
         <GetKVSecrets>
             <Output TaskParameter="Email" PropertyName="EmailAddress" />
         </GetKVSecrets>
 
         <Message Text="Email is $(EmailAddress)" />
     </Target>
-
 </Project>
