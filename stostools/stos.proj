@@ -1,19 +1,21 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="Directory.Build.props" />
-    <Import Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" />
-    <Import Project="Directory.Build.props" />    
+    <!-- <Import Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" /> -->
+    <!-- <Import Project="Directory.Build.props" />     -->
     <Import Condition=" '$(DevMode)' != 'true' " Project="SToS.props" Sdk="Microsoft.Internal.SwaggerToSdk.Tools" Version="0.9.0" />
     <Import Condition=" '$(DevMode)' == 'true' AND Exists('$(DevMode_SDK_SToSPropsFile)') " Project="$(DevMode_SDK_SToSPropsFile)" />
     
-<!--
+
   <PropertyGroup>
     <DotNetRuntimeContext>$(MSBuildRuntimeType)</DotNetRuntimeContext>
     <FxVersionTasksToUse Condition=" '$(DotNetRuntimeContext)' == 'Core' ">netstandard2.0</FxVersionTasksToUse>
     <FxVersionTasksToUse Condition=" '$(FxVersionTasksToUse)' == '' AND '$(DotNetRuntimeContext)' == 'Full' ">net461</FxVersionTasksToUse>
-  </PropertyGroup>  <Target Name="Fn">
+  </PropertyGroup>
+  <Target Name="Fn">
     <Message Text="FxVersionTasksToUse is ......... $(FxVersionTasksToUse)" />
   </Target>
 
+<!--
     <Target Name="GRS">
         <Message Text="Executing GetBuildMetadata"/>
         <GetBuildMetadata
@@ -65,11 +67,12 @@
 <Target Name="StartNetSdkCodeGeneration">
 <Message Text="Commencing code generation"  Importance = "High"/>
  <StartNetSdkCodeGeneration
-        GitHubPRNumber = "$(ghprbPullId)" 
-            GitHubCommitId = "$(ghprbActualCommit)"
-            GithubRepositoryUrl = "$(GIT_URL)"
-            TriggerComment = "$(ghprbCommentBody)"
-            JobName = "$(JOB_NAME)"
+        GitHubPRNumber="$(ghprbPullId)" 
+            GitHubCommitId="$(ghprbActualCommit)"
+            GithubRepositoryUrl="$(GIT_URL)"
+            TriggerComment="$(ghprbCommentBody)"
+            JobName="$(PREvent)"
+            DebugMode="$(DebugMode)"
  >
     <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
  </StartNetSdkCodeGeneration>
