@@ -76,9 +76,17 @@
  >
     <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
  </StartNetSdkCodeGeneration>
-<Message Text="net sdk pr metadata row id is $(NetSdkPRMetadataRowId)" Importance="High" />
 
 </Target>
+
+<Target Name="HandleClosedOrMergedRestApiPrs">
+<Message Text="Handling closed or merged PRs"  Importance = "High"/>
+ <HandleClosedOrMergedRestApiPrs
+        RepositoryUrl="$(RepositoryUrl)"
+ >   
+ </HandleClosedOrMergedRestApiPrs>
+</Target>
+
     <Target Name="KV">
         <DebugTask />
         <GetKVSecrets>
