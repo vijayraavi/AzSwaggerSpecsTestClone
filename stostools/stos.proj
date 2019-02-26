@@ -71,7 +71,6 @@
             GitHubCommitId="$(ghprbActualCommit)"
             GithubRepositoryUrl="$(GIT_URL)"
             TriggerComment="$(ghprbCommentBody)"
-            JobName="$(PREvent)"
             DebugMode="$(DebugMode)"
  >
     <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
