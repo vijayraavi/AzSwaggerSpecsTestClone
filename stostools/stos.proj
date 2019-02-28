@@ -67,11 +67,11 @@
 <Target Name="StartNetSdkCodeGeneration">
 <Message Text="Commencing code generation"  Importance = "High"/>
  <StartNetSdkCodeGeneration
-        GitHubPRNumber="$(ghprbPullId)" 
-            GitHubCommitId="$(ghprbActualCommit)"
-            GithubRepositoryUrl="$(GIT_URL)"
-            TriggerComment="$(ghprbCommentBody)"
-            DebugMode="$(DebugMode)"
+        GitHubPRNumber="$(githubprnumber)" 
+            GitHubCommitId="$(githubcommitid)"
+            GithubRepositoryUrl="$(giturl)"
+            TriggerComment="$(triggercomment)"
+            DebugMode="$(debugmode)"
  >
     <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
  </StartNetSdkCodeGeneration>
