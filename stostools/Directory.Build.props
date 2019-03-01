@@ -17,9 +17,6 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<!--
-		<OverrideDeveloperSettings Condition=" '$(OverrideDeveloperSettings)' == '' ">false</OverrideDeveloperSettings>
-		-->
 		<DevMode Condition=" '$(DevMode)' == '' ">false</DevMode>
 	</PropertyGroup>
 
@@ -75,9 +72,6 @@
 		<ProjectsToBuild Include="@(SToSProjects);@(SToSTestProjects)" />
 		<ProjectsToPublish Include="@(SToSProjects)" />
 	</ItemGroup>
-	<!--
-	<Import Project="SdkMgmt.props" Condition=" Exists('$(RepoNugetFeedDir)\Ms.Az.NetSdkBuildTools.Package.0.9.0.nupkg') " Sdk="Ms.Az.NetSdkBuildTools.Package" Version="0.9.0" />	
-	-->
 
 	<!--
 		Detect CI env using available env variables
@@ -135,6 +129,4 @@
 		<IsCIEnvironment Condition=" '$(IsCIEnvironment)' == '' ">false</IsCIEnvironment>
 		<DevMode Condition=" '$(IsCIEnvironment)' == 'true' ">false</DevMode>
 	</PropertyGroup>
-
-	<!-- <Import Project="Directory.Build.targets" /> -->
 </Project>
