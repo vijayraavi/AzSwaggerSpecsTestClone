@@ -40,6 +40,9 @@ $RECYCLE.BIN/
 # Icon must end with two \r
 Icon
 
+# Ignore repo files
+/stostools/restoredPackages
+/stostools/restoredpackages
 
 # Thumbnails
 ._*
