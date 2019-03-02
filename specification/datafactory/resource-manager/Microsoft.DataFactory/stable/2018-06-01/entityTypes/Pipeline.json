@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "DataFactoryManagementClient",
-    "version": "2017-09-01-preview"
+    "version": "2018-06-01"
   },
   "paths": {},
   "definitions": {
@@ -310,7 +310,7 @@
         },
         "maxConcurrentConnections": {
           "type": "object",
-          "description": "The maximum concurrent connection count connectioned to source data store. Type: integer (or Expression with resultType integer)."
+          "description": "The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer)."
         }
       },
       "additionalProperties": {
@@ -1445,7 +1445,7 @@
         },
         "maxConcurrentConnections": {
           "type": "object",
-          "description": "The maximum concurrent connection count connectioned to sink data store. Type: integer (or Expression with resultType integer)."
+          "description": "The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer)."
         }
       },
       "additionalProperties": {
@@ -2549,6 +2549,10 @@
             "type": "object",
             "description": "Type: string (or Expression with resultType string)."
           }
+        },
+        "retentionTimeInDays": {
+          "type": "object",
+          "description": "The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double)."
         }
       },
       "required": [
