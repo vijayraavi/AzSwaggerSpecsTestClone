@@ -18,6 +18,7 @@
                 GitHubPRNumber="$(githubprnumber)" 
                     GitHubCommitId="$(githubcommitid)"
                     RestSpecRepositoryUrl="$(giturl)"
+                    TriggerComment="$(triggercomment)"
                     DebugMode="$(debugmode)"
         >
             <Output TaskParameter="NetSdkPRMetadataRowId" PropertyName="NetSdkPRMetadataRowId" />
