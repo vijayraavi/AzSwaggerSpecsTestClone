@@ -32,7 +32,11 @@
         >   
         </HandleClosedOrMergedRestApiPrs>
     </Target>
-
+        <Target Name="HandleUnprocessedRestApiPrs">
+        <Message Text="Handling unprocessed PRs"  Importance = "High"/>
+        <HandleUnprocessedRestApiPrs RepositoryUrl="$(RepositoryUrl)">   
+        </HandleUnprocessedRestApiPrs>
+    </Target>
     <Target Name="KV">
         <GetKVSecrets>
             <Output TaskParameter="Email" PropertyName="EmailAddress" />
