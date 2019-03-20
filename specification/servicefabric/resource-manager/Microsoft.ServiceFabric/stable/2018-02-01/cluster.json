@@ -3,7 +3,7 @@
   "info": {
     "title": "ServiceFabricManagementClient",
     "description": "Azure Service Fabric Resource Provider API Client",
-    "version": "2018-02-01"
+    "version": "2018-02-01-preview"
   },
   "host": "management.azure.com",
   "schemes": [
