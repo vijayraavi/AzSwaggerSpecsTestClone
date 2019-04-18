@@ -7287,6 +7287,18 @@
         "diskEncryptionInfo": {
           "$ref": "#/definitions/DiskEncryptionInfo",
           "description": "The recovery disk encryption information."
+        },
+        "recoveryAvailabilityZone": {
+          "description": "The recovery availability zone.",
+          "type": "string"
+        },
+        "recoveryAzureNetworkId": {
+          "description": "The recovery Azure virtual network ARM id.",
+          "type": "string"
+        },
+        "recoverySubnetName": {
+          "description": "The recovery subnet name.",
+          "type": "string"
         }
       },
       "x-ms-discriminator-value": "A2A"
@@ -7683,6 +7695,13 @@
             "name": "RecoveryPointSyncType",
             "modelAsString": true
           }
+        },
+        "disks": {
+          "description": "List of disk ids representing a recovery point.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "x-ms-discriminator-value": "A2A"
@@ -7755,6 +7774,13 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/A2AProtectedDiskDetails"
+          }
+        },
+		"unprotectedDisks": {
+          "description": "The list of unprotected disks.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/A2AUnprotectedDiskDetails"
           }
         },
         "protectedManagedDisks": {
@@ -7866,6 +7892,10 @@
           "format": "date-time",
           "description": "The time (in UTC) when the last RPO value was calculated by Protection Service.",
           "type": "string"
+        },
+        "recoveryAvailabilityZone": {
+          "description": "The recovery availability zone.",
+          "type": "string"
         }
       },
       "x-ms-discriminator-value": "A2A"
@@ -7963,7 +7993,18 @@
       },
       "x-ms-discriminator-value": "A2A"
     },
-    "A2AUpdateContainerMappingInput": {
+     "A2AUnprotectedDiskDetails": {
+      "description": "A2A unprotected disk details.",
+      "type": "object",
+      "properties": {
+        "diskLunId": {
+          "format": "int32",
+          "description": "The source lun Id for the data disk.",
+          "type": "integer"
+        }
+      }
+    },
+	"A2AUpdateContainerMappingInput": {
       "description": "A2A update protection container mapping.",
       "type": "object",
       "allOf": [
