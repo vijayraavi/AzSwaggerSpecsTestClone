@@ -17,7 +17,7 @@
         <StartNetSdkCodeGeneration
                 GitHubPRNumber="$(githubprnumber)" 
                     GitHubCommitId="$(githubcommitid)"
-                    GithubRepositoryUrl="$(giturl)"
+                    RestSpecRepositoryUrl="$(giturl)"
                     TriggerComment="$(triggercomment)"
                     DebugMode="$(debugmode)"
         >
@@ -32,7 +32,11 @@
         >   
         </HandleClosedOrMergedRestApiPrs>
     </Target>
-
+    <Target Name="HandleUnprocessedRestApiPrs">
+        <Message Text="Handling unprocessed PRs"  Importance = "High"/>
+        <HandleUnprocessedRestApiPrs RepositoryUrl="$(RepositoryUrl)">   
+        </HandleUnprocessedRestApiPrs>
+    </Target>
     <Target Name="KV">
         <GetKVSecrets>
             <Output TaskParameter="Email" PropertyName="EmailAddress" />
